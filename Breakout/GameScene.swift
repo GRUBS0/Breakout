@@ -10,6 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     var ball = SKShapeNode()
+    var paddle = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         // This stuff happens once ( when the app opens)
@@ -17,8 +18,8 @@ class GameScene: SKScene {
         resetGame()
     }
     func resetGame(){
-    // this stuff happens before each game starts
-    makeBall()
+        // this stuff happens before each game starts
+        makeBall()
     }
     
     func createBackground() {
@@ -58,5 +59,16 @@ class GameScene: SKScene {
         // does not slow down over time
         ball.physicsBody?.linearDamping = 0
         ball.physicsBody?.contactTestBitMask = (ball.physicsBody?.collisionBitMask)!
+        
+        addChild(ball)
+    }
+    func makePaddle() {
+        paddle.removeFromParent()
+        paddle = SKSpriteNode(color: .white,size:CGSize(width:frame.width/4,height:20))
+        paddle.position = CGPoint(x: frame.minX, y: frame.minY + 125)
+        paddle.name = "paddle"
+        paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
+        paddle.physicsBody?.isDynamic = false
+        addChild(paddle)
     }
 }
